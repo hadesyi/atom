@@ -24,6 +24,7 @@ module.exports =
     chromedriver.on "exit", (code, signal) ->
       errorCode = code unless signal?
     chromedriver.stderr.on "data", (log) ->
+      console.log log.toString()
       logs.push(log.toString())
     chromedriver.stderr.on "close", ->
       if errorCode?
@@ -36,7 +37,8 @@ module.exports =
         .call(done)
     , 30000
 
-    runs -> chromedriver.kill()
+    runs ->
+      chromedriver.kill()
 
   # Start Atom using chromedriver.
   startAtom: (args, env={}) ->
